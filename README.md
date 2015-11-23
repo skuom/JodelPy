@@ -37,11 +37,11 @@ JodelPy is a rudimentary Python Interface for Jodel ( http://jodel-app.com )
    - requesocks (for TOR)
 
 ### TOR support
-**CAUTION: Only for advanced users**
+**CAUTION: For advanced users only!**
 
-To really use JodelPy anonymously you can TOR. Please make sure you understand what you are doing!
+To use JodelPy "anonymously" you can hide your IP with [TOR](https://www.torproject.org/). Please make sure you understand what you are doing!
 
-1. Install tor as CLI tool: https://www.torproject.org/docs/installguide.html.en for your OS
+1. Install tor as CLI tool using the [Install guide](https://www.torproject.org/docs/installguide.html.en)
 2. Install requesocks with pip (`$ pip install requesocks`)
 3. Run `$ tor` before running a script
 4. Append `--tor` to your command
