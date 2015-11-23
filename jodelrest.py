@@ -132,6 +132,15 @@ class RESTClient(object):
         return "Bearer %s" % access['access_token']
 
     def __init__(self, location, auth=None, enable_tor=False):
+        self.tor_enabled = enable_tor
+        if self.tor_enabled:
+            import requesocks
+            self.tor_session = requesocks.session()
+            self.tor_session.proxies = {
+                'http': 'socks5://127.0.0.1:9050',
+                'https': 'socks5://127.0.0.1:9050'
+            }
+
         self.headers = dict(self.BASE_HEADERS)
         self.headers['User-Agent'] = self.USER_AGENT
         self.location = location
@@ -139,14 +148,6 @@ class RESTClient(object):
             auth = self.new_acc()
         self.headers['Authorization'] = auth
         self.auth = auth
-        self.tor_enabled = enable_tor
-        if self.tor_enabled:
-            import requesocks
-            self.tor_session = requesocks.session()
-            self.tor_session.proxies = {
-                'http': 'socks5://127.0.0.1:9150',
-                'https': 'socks5://127.0.0.1:9150'
-            }
 
     def do_post(self, url, payload):
         if self.tor_enabled:
@@ -173,6 +174,6 @@ class RESTClient(object):
             return requests.post("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
 
     def close(self):
-        if self.tor:
+        if self.tor_enabled:
             self.close()
         requests.session().close()
