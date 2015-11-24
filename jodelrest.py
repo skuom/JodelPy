@@ -175,5 +175,5 @@ class RESTClient(object):
 
     def close(self):
         if self.tor_enabled:
-            self.close()
+            self.tor_session.close()
         requests.session().close()
