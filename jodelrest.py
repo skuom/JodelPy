@@ -93,6 +93,26 @@ class RESTClient(object):
 
         return self.do_post("/posts/", json_payload)
 
+    def post_comment(self, ancestor, text, country="DE", color="DD5F5F"):
+        city = self.location['city']
+        latitude =  self.location['latitude']
+        longtitude = self.location['longtitude']
+        payload = {"ancestor": ancestor,
+                   "color": color,
+                   "location":
+                       {"loc_accuracy": 10.0,
+                        "city": city,
+                        "loc_coordinates":
+                            {"lat": latitude,
+                             "lng": longtitude},
+                        "country": country,
+                        "name": "41"},
+                   "message": text
+                   }
+        json_payload = json.dumps(payload)
+
+        return self.do_post("/posts/", json_payload)
+
     def delete(self, postid):
         return self.do_delete('/posts/%s' % postid).content
 

@@ -5,15 +5,17 @@ __author__ = 'Jan'
 
 uni = {"latitude": 53.107, "longtitude": 8.853, "city": "Bremen"}
 
+
+
 rc = RESTClient(uni, None)
 posts = rc.get_posts()
 rc.close()
 
 for post in posts:
     print '[ %s ] %s' % (post['vote_count'], post['message'].encode('UTF-8'))
-    var = str(raw_input("[ up / down / exit ] : "))
+    var = str(raw_input("[ up / down / comment / exit ] : "))
 
-    commands = {'up', 'down', 'exit'}
+    commands = {'up', 'down', 'comment','exit'}
 
     if var == 'exit':
         break
@@ -24,7 +26,10 @@ for post in posts:
         continue
     elif var =='exit':
         break
-
+    elif var == 'comment':
+        comment = str(raw_input('# Comment ? '))
+        rc.post_comment(id, comment)
+        print '\n\n----------------------------\n'
     else:
         amount = int(raw_input('# Wie viel ? '))
         for i in tqdm(range(amount)):
