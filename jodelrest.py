@@ -131,13 +131,13 @@ class RESTClient(object):
         self.set_pos(self.location['longtitude'], self.location['latitude'], self.location['city'])
         return "Bearer %s" % access['access_token']
 
-    def __init__(self, location, auth=None, enable_tor=False):
+    def __init__(self, location, auth=None, enable_tor=False, tor_port=9050):
         self.tor_enabled = enable_tor
         if self.tor_enabled:
             import socks
             import socket
 
-            socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9150)
+            socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", tor_port)
             socket.socket = socks.socksocket
 
         self.headers = dict(self.BASE_HEADERS)

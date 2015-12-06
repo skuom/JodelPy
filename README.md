@@ -42,6 +42,7 @@ JodelPy is a rudimentary Python Interface for Jodel ( http://jodel-app.com )
 To use JodelPy "anonymously" you can hide your IP with [TOR](https://www.torproject.org/). Please make sure you understand what you are doing!
 
 1. Install tor as CLI tool using the [Install guide](https://www.torproject.org/docs/installguide.html.en)
-2. Install requesocks with pip (`$ pip install requesocks`)
+2. Install pysocks with pip (`$ pip install pysocks`)
 3. Run `$ tor` in a secondary process
 4. Append `--tor` to your command
+5. Optional: if you are using the TOR bundle for TOR connectivity or not using any of the standard ports for tor, you should append `--tport 9150` (or whichever port you use) to your command
