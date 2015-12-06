@@ -134,12 +134,11 @@ class RESTClient(object):
     def __init__(self, location, auth=None, enable_tor=False):
         self.tor_enabled = enable_tor
         if self.tor_enabled:
-            import requesocks
-            self.tor_session = requesocks.session()
-            self.tor_session.proxies = {
-                'http': 'socks5://127.0.0.1:9050',
-                'https': 'socks5://127.0.0.1:9050'
-            }
+            import socks
+            import socket
+
+            socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9150)
+            socket.socket = socks.socksocket
 
         self.headers = dict(self.BASE_HEADERS)
         self.headers['User-Agent'] = self.USER_AGENT
@@ -150,30 +149,16 @@ class RESTClient(object):
         self.auth = auth
 
     def do_post(self, url, payload):
-        if self.tor_enabled:
-            return self.tor_session.post("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
-        else:
-            return requests.post("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
+        return requests.post("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
 
     def do_get(self, url):
-        if self.tor_enabled:
-            return self.tor_session.get("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
-        else:
-            return requests.get("%s%s" % (self.API_URL, url), headers=self.headers)
+        return requests.get("%s%s" % (self.API_URL, url), headers=self.headers)
 
     def do_put(self, url, payload=None):
-        if self.tor_enabled:
-            return self.tor_session.put("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
-        else:
-            return requests.put("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
+        return requests.put("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
 
     def do_post(self, url, payload):
-        if self.tor_enabled:
-            return self.tor_session.post("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
-        else:
-            return requests.post("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
+        return requests.post("%s%s" % (self.API_URL, url), data=payload, headers=self.headers)
 
     def close(self):
-        if self.tor_enabled:
-            self.tor_session.close()
         requests.session().close()

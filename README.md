@@ -34,7 +34,7 @@ JodelPy is a rudimentary Python Interface for Jodel ( http://jodel-app.com )
 
    - Python 2.7
    - Requests
-   - requesocks (for TOR)
+   - PySocks (for TOR)
 
 ### TOR support
 **CAUTION: For advanced users only!**
